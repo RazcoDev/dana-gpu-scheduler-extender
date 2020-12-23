@@ -1,0 +1,60 @@
+version: v1beta9
+images:
+  app:
+    image: razush/gpushareschedulerextender
+    preferSyncOverRebuild: true
+    injectRestartHelper: true
+    appendDockerfileInstructions:
+    - USER root
+    build:
+      docker:
+        options:
+          target: build
+deployments:
+- name: dana-scheduler-extender
+  helm:
+    componentChart: true
+    values:
+      containers:
+      - image: razush/gpushareschedulerextender
+      service:
+        ports:
+        - port: 8080
+dev:
+  ports:
+  - imageName: app
+    forward:
+    - port: 8080
+  open:
+  - url: http://localhost:8080
+  sync:
+  - imageName: app
+    excludePaths:
+    - .git/
+    - .idea/
+    uploadExcludePaths:
+    - Dockerfile
+    - .idea/
+    - devspace.yaml
+    onUpload:
+      restartContainer: true
+profiles:
+- name: production
+  patches:
+  - op: remove
+    path: images.app.appendDockerfileInstructions
+  - op: remove
+    path: images.app.injectRestartHelper
+  - op: remove
+    path: images.app.build.docker.options.target
+- name: interactive
+  patches:
+  - op: add
+    path: dev.interactive
+    value:
+      defaultEnabled: true
+  - op: add
+    path: images.app.entrypoint
+    value:
+    - sleep
+    - "9999999999"
