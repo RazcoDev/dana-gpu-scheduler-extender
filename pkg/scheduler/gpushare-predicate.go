@@ -11,6 +11,7 @@ import (
 )
 
 func NewGPUsharePredicate(clientset *kubernetes.Clientset, c *cache.SchedulerCache) *Predicate {
+	log.Printf("akhsdfahjdhjafhjkhkjlfhjklfahjlkfahjlk")
 	return &Predicate{
 		Name: "dana-gpu-scheduling",
 		Func: func(pod *v1.Pod, nodeName string, c *cache.SchedulerCache) (bool, error) {

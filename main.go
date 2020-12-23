@@ -40,6 +40,10 @@ func init() {
 }
 
 func main() {
+	// +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch;create;update;patch;delete
+	// +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
+	// +kubebuilder:rbac:groups=routes,resources=routes,verbs=get;list;watch;create;update;patch;delete
+	// +kubebuilder:rbac:groups=core,resources=pods/status,verbs=get;update;patch
 	var metricsAddr string
 	var enableLeaderElection bool
 
