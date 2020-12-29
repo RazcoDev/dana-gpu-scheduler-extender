@@ -30,7 +30,7 @@ var (
 )
 
 func initKubeClient() {
-	kubeConfig := ""
+	kubeConfig := "/Users/razco/.kube/config"
 	if len(os.Getenv(RecommendedKubeConfigPathEnv)) > 0 {
 		// use the current context in kubeconfig
 		// This is very useful for running locally.
